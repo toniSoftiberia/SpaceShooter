@@ -6,8 +6,8 @@ public class Boundary {
     public float
         xMin = -6,
         xMax = 6,
-        zMin = -4,
-        zMax = 8;
+        yMin = -6,
+        yMax = 6;
 }
 
 public class PlayerController : MonoBehaviour {
@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour {
             GameObject clone = Instantiate(shoot, shootSpawn.position, shootSpawn.rotation) as GameObject;
             _audio.Play();
         }
-        if (Input.GetKeyDown("j")) {
+        if (Input.GetKeyDown("e")) {
             ChangeShipColor();
         }
     }
@@ -72,17 +72,17 @@ public class PlayerController : MonoBehaviour {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+        Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0.0f);
 
         _rb.velocity = (movement * speed);
 
         _rb.position = new Vector3(
             Mathf.Clamp(_rb.position.x, bundary.xMin, bundary.xMax),
-            0.0f,
-            Mathf.Clamp(_rb.position.z, bundary.zMin, bundary.zMax)
+            Mathf.Clamp(_rb.position.y, bundary.yMin, bundary.yMax),
+            0.0f            
            );
 
-        _rb.rotation = Quaternion.Euler(0.0f, 0.0f, _rb.velocity.x * -tilt);
+        _rb.rotation = Quaternion.Euler(_rb.velocity.y * -tilt, 0.0f, _rb.velocity.x * -tilt);
     }
 
     void ChangeShipColor() {
