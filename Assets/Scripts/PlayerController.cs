@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour {
 
 
     void Update() {
-        if (Input.GetButton("Fire1") && Time.time > _nextFire) {
+        if (Input.GetButton("X") && Time.time > _nextFire) {
             GameObject shoot = redShoot;
             if (shipColor == ShipColor.purple)
                 shoot = purpleShoot;
@@ -62,15 +62,15 @@ public class PlayerController : MonoBehaviour {
             GameObject clone = Instantiate(shoot, shootSpawn.position, shootSpawn.rotation) as GameObject;
             _audio.Play();
         }
-        if (Input.GetKeyDown("e")) {
+        if (Input.GetButton("A")) {
             ChangeShipColor();
         }
     }
 
 
     void FixedUpdate() {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
+        float moveHorizontal = Input.GetAxis("LeftAnalogX");
+        float moveVertical = Input.GetAxis("LeftAnalogY");
 
         Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0.0f);
 

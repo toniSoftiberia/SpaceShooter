@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
@@ -9,9 +10,9 @@ public class GameController : MonoBehaviour {
     public float spawnWait;
     public float startWait;
 
-    public GUIText scoreText;
-    public GUIText restartText;
-    public GUIText gameOverText;
+    public GameObject scoreText;
+    public GameObject restartText;
+    public GameObject gameOverText;
 
 
     private int score = 0;
@@ -23,15 +24,15 @@ public class GameController : MonoBehaviour {
     void Start () {
         StartCoroutine (SpawnWaves());
         UpdateScore();
-        restartText.text = "";
-        gameOverText.text = "";
+        restartText.GetComponent<Text>().text = "";
+        gameOverText.GetComponent<Text>().text = "";
 
-    }
+}
 
     void Update()
     {
         if (_restart)
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetButton("X"))
                 Application.LoadLevel(Application.loadedLevel);
     }
 
@@ -49,7 +50,7 @@ public class GameController : MonoBehaviour {
             }
             if (_gameOver)
             {
-                restartText.text = "Press 'R' for Restart";
+                restartText.GetComponent<Text>().text = "Press 'X' for Restart";
                 _restart = true;
             }
         }
@@ -63,12 +64,12 @@ public class GameController : MonoBehaviour {
 
     void UpdateScore()
     {
-        scoreText.text = "Score: " + score;
+        scoreText.GetComponent<Text>().text = "Score: " + score;
     }
 
     public void GameOver()
     {
-        gameOverText.text = "Game Over!";
+        gameOverText.GetComponent<Text>().text = "Game Over!";
         _gameOver = true;
     }
 }
